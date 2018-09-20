@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sys_script_email">
+    <sys_script_email action="INSERT_OR_UPDATE">
+        <name>x_snc_loaner_reque_loaner_request_script_1</name>
+        <new_lines_to_html>false</new_lines_to_html>
+        <script><![CDATA[(function executeRule(current, previous /*null when async*/) {
+ 
+if (current.item_type=="cmdb_ci_computer"){
+// Add your code here
+var request = new sn_ws.RESTMessageV2();
+    request.setEndpoint('https://adf-kp2-sep14phs-test-002.lab.service-now.com/api/now/table/u_password_vault?sysparm_query=u_asset%3DP'+  current.cmdb_ci.asset_tag+ '&sysparm_fields=u_password&sysparm_limit=1');
+request.setHttpMethod('GET');
+ 
+//Eg. UserName="admin", Password="admin" for this code sample.
+var user = 'admin';
+var password = 'phs428';
+ 
+request.setBasicAuth(user,password);
+request.setRequestHeader("Accept","application/json");
+ 
+var response = request.execute();
+        var test=response.getBody();
+template.print(response.getBody());
+            var obj=JSON.parse(response.getBody());
+            myPass=obj.result[0].u_password;
+            template.print('u_password:' + myPass);
+}
+ 
+})(current, previous);]]></script>
+        <sys_class_name>sys_script_email</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-09-20 20:22:57</sys_created_on>
+        <sys_id>5ba17d6b4d2863007f448894725cf79c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_snc_loaner_reque_loaner_request_script_1</sys_name>
+        <sys_package display_value="Loaner Request" source="x_snc_loaner_reque">5fa7f6764dec23007f448894725cf781</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Loaner Request">5fa7f6764dec23007f448894725cf781</sys_scope>
+        <sys_update_name>sys_script_email_5ba17d6b4d2863007f448894725cf79c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-09-20 20:22:57</sys_updated_on>
+    </sys_script_email>
+</record_update>
