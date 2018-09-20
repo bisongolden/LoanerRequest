@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record_update table="sysauto_script">
+    <sysauto_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <condition/>
+        <conditional>false</conditional>
+        <name>Loaner Request Scheduled script</name>
+        <run_as display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</run_as>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period/>
+        <run_start>2018-09-20 13:14:13</run_start>
+        <run_time>1970-01-01 09:00:00</run_time>
+        <run_type>daily</run_type>
+        <script><![CDATA[var rightNow=new GlideDateTime();
+var lateClaims=new GlideRecord('x_snc_claims_claims');
+lateClaims.addQuery('state','=',2);
+lateClaims.addQuery('u_wip_date','<=',rightNow.addDaysUTC(-3));
+lateClaims.query();
+
+while(lateClaims.next()){
+	gs.into('wip= ' + lateClaims.u_wip_date + ' , days ago=' + rightNow.addDaysUTC(-3) + ', number = ' + lateClaims.number);
+}]]></script>
+        <sys_class_name>sysauto_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-09-20 13:18:02</sys_created_on>
+        <sys_id>838f08674de463007f448894725cf73a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Loaner Request Scheduled script</sys_name>
+        <sys_package display_value="Loaner Request" source="x_snc_loaner_reque">5fa7f6764dec23007f448894725cf781</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Loaner Request">5fa7f6764dec23007f448894725cf781</sys_scope>
+        <sys_update_name>sysauto_script_838f08674de463007f448894725cf73a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-09-20 13:18:02</sys_updated_on>
+        <upgrade_safe>false</upgrade_safe>
+    </sysauto_script>
+</record_update>
